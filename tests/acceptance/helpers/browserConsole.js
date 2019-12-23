@@ -25,7 +25,6 @@ export async function getAllLogsWithDateTime (level = null) {
   if (level) {
     logs = logs.filter(entry => entry.level === level)
   }
-
   return logs
     .filter(e => !e.message.includes('favicon.ico'))
     .map(formatLog)

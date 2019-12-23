@@ -2,6 +2,7 @@ import { setDefaultTimeout, After, Before, defineParameterType } from 'cucumber'
 import { createSession, closeSession, client, startWebDriver, stopWebDriver } from 'nightwatch-api'
 import { rollbackConfigs, setConfigs, cacheConfigs } from './helpers/config'
 import { getAllLogsWithDateTime } from './helpers/browserConsole.js'
+
 const codify = require('./helpers/codify')
 
 const ldap = require('./helpers/ldapHelper')
@@ -86,6 +87,7 @@ Before(function cacheAndSetConfigsOnRemoteIfExists () {
 
 // After hooks are run in reverse order in which they are defined
 // https://github.com/cucumber/cucumber-js/blob/master/docs/support_files/hooks.md#hooks
+
 After(function rollbackConfigsOnRemoteIfExists () {
   if (client.globals.ocis) {
     return
