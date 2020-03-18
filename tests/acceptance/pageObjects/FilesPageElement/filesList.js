@@ -634,9 +634,6 @@ module.exports = {
     publicLinkSideBar: {
       selector: '#oc-files-file-link'
     },
-    checkBoxAllFiles: {
-      selector: '#filelist-check-all'
-    },
     checkboxInFileRow: {
       selector: '//input[@type="checkbox"]',
       locateStrategy: 'xpath'
