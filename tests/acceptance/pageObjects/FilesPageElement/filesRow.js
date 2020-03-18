@@ -95,6 +95,12 @@ module.exports = {
     }
   },
   elements: {
+<<<<<<< HEAD
+=======
+    checkBoxAllFiles: {
+      selector: '#filelist-check-all'
+    },
+>>>>>>> moved methods for filesRow and related element to seperate PO
     notMarkedFavoriteInFileRow: {
       selector: '//span[contains(@class, "oc-star-dimm")]',
       locateStrategy: 'xpath'
