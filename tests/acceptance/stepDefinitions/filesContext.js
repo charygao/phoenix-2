@@ -317,15 +317,15 @@ When('the user renames the following file/folder using the webUI', async functio
 })
 
 Given('the user has marked file/folder {string} as favorite using the webUI', function (path) {
-  return client.page.FilesPageElement.filesList().markAsFavorite(path)
+  return client.page.FilesPageElement.filesRow().markAsFavorite(path)
 })
 
 When('the user marks file/folder {string} as favorite using the webUI', function (path) {
-  return client.page.FilesPageElement.filesList().markAsFavorite(path)
+  return client.page.FilesPageElement.filesRow().markAsFavorite(path)
 })
 
 When('the user unmarks the favorited file/folder {string} using the webUI', function (path) {
-  return client.page.FilesPageElement.filesList().unmarkFavorite(path)
+  return client.page.FilesPageElement.filesRow().unmarkFavorite(path)
 })
 
 Then('there should be no files/folders/resources listed on the webUI', async function () {
@@ -449,7 +449,7 @@ Given('the user has reloaded the current page of the webUI', function () {
 })
 
 When('the user marks all files for batch action using the webUI', function () {
-  return client.page.FilesPageElement.filesList().checkAllFiles()
+  return client.page.FilesPageElement.filesRow().checkAllFiles()
 })
 
 When('the user batch deletes the marked files using the webUI', function () {
@@ -626,14 +626,14 @@ Then('as {string} these files/folders/resources should be listed in the folder {
 })
 
 Then('file/folder {string} should be marked as favorite on the webUI', function (path) {
-  return client.page.FilesPageElement.filesList().isMarkedFavorite(path)
+  return client.page.FilesPageElement.filesRow().isMarkedFavorite(path)
     .then(result => {
       assert.strictEqual(result, true, `${path} expected to be favorite but was not`)
     })
 })
 
 Then('file/folder {string} should not be marked as favorite on the webUI', function (path) {
-  return client.page.FilesPageElement.filesList().isMarkedFavorite(path)
+  return client.page.FilesPageElement.filesRow().isMarkedFavorite(path)
     .then(result => {
       assert.strictEqual(result, false, `not expected ${path} to be favorite but was`)
     })
