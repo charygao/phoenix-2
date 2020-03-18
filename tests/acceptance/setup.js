@@ -37,7 +37,6 @@ Before(function logSessionInfoOnSauceLabs () {
   if (process.env.SAUCE_USERNAME) {
     return client
       .session(function (session) {
-        console.log('  Link to saucelabs job: https://app.saucelabs.com/tests/' + session.sessionId)
       })
       .timeoutsAsyncScript(SAUCELABS_ASYNC_SCRIPT_TIMEOUT)
   }
