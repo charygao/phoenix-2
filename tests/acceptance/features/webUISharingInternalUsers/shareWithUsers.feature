@@ -713,18 +713,16 @@ Feature: Sharing files and folders with internal users
       | lorem.txt       |
       | simple-folder   |
 
-   Scenario: change existing expiration date of an existing share after the maximum expiry date is enforced
-     Given the setting "shareapi_default_expire_date_user_share" of app "core" has been set to "yes"
-     And the setting "shareapi_expire_after_n_days_user_share" of app "core" has been set to "7"
-     And user "user1" has created a new share with following settings
-       | path       | lorem.txt  |
-       | shareWith  | user2      |
-     And the setting "shareapi_enforce_expire_date_user_share" of app "core" has been set to "yes"
-     And user "user1" has logged in using the webUI
-     When the user tries to edit the collaborator expiry date of "User Two" of resource "lorem.txt" to "+14" days using the webUI
-#     Then the expiration date for "+14" days should be disabled
-#     And the expiration date shown on the webUI should be "+7" days
-     Then a "required" label should be visible above the expiration date field
-     And the expiration date for "+14 days" should be disabled
-     Then the expiration date shown on the webUI should be "+7" days
-     And it should not be possible to save the pending share on the webUI
+  Scenario: change existing expiration date of an existing share after the maximum expiry date is enforced
+    Given the setting "shareapi_default_expire_date_user_share" of app "core" has been set to "yes"
+    And the setting "shareapi_expire_after_n_days_user_share" of app "core" has been set to "7"
+    And user "user1" has created a new share with following settings
+      | path      | lorem.txt |
+      | shareWith | user2     |
+    And the setting "shareapi_enforce_expire_date_user_share" of app "core" has been set to "yes"
+    And user "user1" has logged in using the webUI
+    When the user tries to edit the collaborator expiry date of "User Two" of resource "lorem.txt" to "+14" days using the webUI
+    Then a "required" label should be visible above the expiration date field
+    And the expiration date for "+14 days" should be disabled
+    Then the expiration date shown on the webUI should be "+7" days
+    And it should not be possible to save the pending share on the webUI

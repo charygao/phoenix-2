@@ -496,6 +496,19 @@ module.exports = {
       return this.saveChanges()
     },
     /**
+     * @param {string} days number of days to be added or subtracted from current date
+     *
+     * @return {Promise<*>}
+     */
+    attemptToChangeCollaboratorExpiryDateToDisabledValue: async function (days) {
+      const dateToSet = calculateDate(days)
+      await this.waitForElementVisible('@expirationDateField')
+        .waitForElementNotPresent('@elementInterceptingCollaboratorsExpirationInput')
+        .click('@expirationDateField')
+      const dateToBeSet = new Date(Date.parse(dateToSet))
+      return client.page.FilesPageElement.expirationDatePicker().isExpiryDateDisabled(dateToBeSet)
+    },
+    /**
      * opens expiration date field on the webUI
      * @return {*}
      */
@@ -531,6 +544,17 @@ module.exports = {
           disabled = result.value
         })
       return disabled
+    },
+    /**
+     * checks if the required label is present in the expiration date field
+     * @return Boolean
+     */
+    isRequiredLabelPresent: async function () {
+      let required = false
+      await this
+        .waitForElementVisible('@requiredLabelInCollaboratorsExpirationDate')
+      required = true
+      return required
     }
   },
   elements: {
@@ -647,6 +671,13 @@ module.exports = {
     },
     expirationDateField: {
       selector: '.vdatetime-input'
+    },
+    requiredLabelInCollaboratorsExpirationDate: {
+      selector: '//label[@for="files-collaborators-collaborator-expiration-input"]/em[.="(required)"]',
+      locateStrategy: 'xpath'
+    },
+    elementInterceptingCollaboratorsExpirationInput: {
+      selector: '.vdatetime-overlay.vdatetime-fade-leave-active.vdatetime-fade-leave-to'
     }
   }
 }

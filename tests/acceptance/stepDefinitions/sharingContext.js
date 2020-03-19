@@ -895,6 +895,16 @@ Then('the collaborators list for file/folder/resource {string} should be empty',
   assert.strictEqual(count, 0, `Expected to have no collaborators for '${resource}', Found: ${count}`)
 })
 
+Then('a {string} label should be visible above the expiration date field', async function (label) {
+  const isRequiredLabelPresent = await client.page.FilesPageElement.sharingDialog().isRequiredLabelPresent()
+  return assert.strictEqual(isRequiredLabelPresent, true, "The 'required label is unexpectedly not present in the expiration date'")
+})
+
+Then('the expiration date for {string} should be disabled', async function (expiration) {
+  const isDisabled = await client.page.FilesPageElement.sharingDialog().attemptToChangeCollaboratorExpiryDateToDisabledValue(expiration)
+  return assert.strictEqual(isDisabled, true, 'The date was expected to be disabled, but is not')
+})
+
 Then('the current collaborators list should have order {string}', async function (expectedNames) {
   const actualNames = (await client.page.FilesPageElement.SharingDialog.collaboratorsDialog().getCollaboratorsListNames()).join(',')
   assert.strictEqual(actualNames, expectedNames, `Expected to have collaborators in order '${expectedNames}', Found: ${actualNames}`)
