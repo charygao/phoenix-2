@@ -1025,8 +1025,8 @@ Then('the expiration date shown on the webUI should be {string} days',
       .sharingDialog()
       .getExpirationDateFromInputField()
     assert.strictEqual(
-      expectedDateString,
       dateStringFromInputField,
+      expectedDateString,
       `Expected: Expiration date field with ${expectedDateString}, but found ${dateStringFromInputField}`
     )
   })

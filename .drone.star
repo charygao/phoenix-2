@@ -45,6 +45,7 @@ config = {
 				'webUISharingNotifications': 'SharingNotifications',
 				'webUIAccount': 'Account'
 			},
+			'screenshots': True,
 		},
 		'webUIFederation': {
 			'suites': {
