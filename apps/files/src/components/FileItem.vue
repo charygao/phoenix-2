@@ -5,6 +5,7 @@
     :icon="previewIcon"
     :iconUrl="previewUrl"
     :filename="item.name"
+    :data-preview-loaded="previewLoaded"
     />
 </template>
 <script>
@@ -30,7 +31,11 @@ export default {
   },
   data: function () {
     return {
-      previewUrl: this.item.previewUrl
+      previewUrl: this.item.previewUrl,
+      // false while the preview is loading
+      // true when the preview loading process is done,
+      // even if we fell back to the mime type icon
+      previewLoaded: false
     }
   },
   computed: {
@@ -80,6 +85,10 @@ export default {
       this.mediaSource(previewUrl, 'url', this.requestHeaders).then(dataUrl => {
         // cache inside item
         this.previewUrl = this.item.previewUrl = dataUrl
+        this.previewLoaded = true
+      }).catch((e) => {
+        this.previewUrl = null
+        this.previewLoaded = true
       })
     }
   }

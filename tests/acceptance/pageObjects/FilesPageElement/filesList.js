@@ -199,12 +199,16 @@ module.exports = {
      */
     navigateToFolder: async function (folder) {
       await this.waitForFileVisible(folder)
+      await this.initAjaxCounters()
 
       await this.useXpath()
         .moveToElement(this.getFileRowSelectorByFileName(folder), 0, 0)
         .click(this.getFileLinkSelectorByFileName(folder))
         .useCss()
         .waitForElementNotPresent('@filesListProgressBar')
+
+      // wait for previews to finish loading
+      await this.waitForOutstandingAjaxCalls()
 
       return this
     },
@@ -366,21 +370,28 @@ module.exports = {
           this.assert.strictEqual(result.value, path.basename(fileName), 'displayed file name not as expected')
         })
         .useCss()
+      // Wait for preview to be loaded
+      this.waitForThumbnailLoaded(fileName, elementType)
       return this
     },
-    getResourceThumbnail: async function (resourceName) {
-      const fileRowPreviewSelector = this.getFileRowSelectorByFileName(resourceName) + this.elements.filePreviewInFileRow.selector
-      const fileRowIconSelector = this.getFileRowSelectorByFileName(resourceName) + this.elements.fileIconInFileRow.selector
+    waitForThumbnailLoaded: async function (resourceName, elementType) {
+      const fileRowPreviewLoadedSelector = this.getFileRowSelectorByFileName(resourceName, elementType) + this.elements.filePreviewLoadedInFileRow.selector
+      await this.useXpath()
+        .waitForElementVisible(fileRowPreviewLoadedSelector)
+        .useCss()
+      return this
+    },
+    getResourceThumbnail: async function (resourceName, elementType) {
+      const fileRowPreviewSelector = this.getFileRowSelectorByFileName(resourceName, elementType) + this.elements.filePreviewInFileRow.selector
+      const fileRowIconSelector = this.getFileRowSelectorByFileName(resourceName, elementType) + this.elements.fileIconInFileRow.selector
       let iconUrl = null
+      // this implicitly waits for preview to be loaded
       await this.waitForFileVisible(resourceName)
-      // while the preview is loading, it will first display the file type icon,
-      // so we might misdetect if we don't wait long enough
+      // try reading the src tag
       await this.useXpath()
         .getAttribute(
           {
-            selector: fileRowPreviewSelector,
-            timeout: 5000,
-            suppressNotFoundErrors: true
+            selector: fileRowPreviewSelector
           },
           'src',
           (result) => {
@@ -540,6 +551,7 @@ module.exports = {
         itemName = this.replaceChar(itemName, '"', '\\"')
       }
 
+      await this.initAjaxCounters()
       await this.waitForElementVisible('@virtualScrollWrapper')
       await this.api.executeAsync(
         function (
@@ -587,6 +599,10 @@ module.exports = {
           scrollWrapperSelector: this.elements.virtualScrollWrapper.selector,
           listHeaderSelector: this.elements.filesTableHeader.selector
         }])
+
+      // wait for previews to be loaded after scrolling to resources that were
+      // not rendered before
+      await this.waitForOutstandingAjaxCalls()
 
       return this
     },
@@ -755,6 +771,9 @@ module.exports = {
     },
     filePreviewInFileRow: {
       selector: '//span[contains(@class, "file-row-name")]//img'
+    },
+    filePreviewLoadedInFileRow: {
+      selector: '//span[contains(@class, "file-row-name") and @data-preview-loaded="true"]'
     },
     notMarkedFavoriteInFileRow: {
       selector: '//span[contains(@class, "oc-star-dimm")]',
