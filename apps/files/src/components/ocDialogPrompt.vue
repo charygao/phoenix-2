@@ -12,9 +12,13 @@
         ref="input"
         @keydown.enter.native="onConfirm"
       ></oc-text-input>
-      <oc-alert v-if="ocError" class="oc-dialog-prompt-alert" :noClose="true" variation="danger">
-        {{ ocError }}
-      </oc-alert>
+      <transition name="custom-classes-transition"
+                  enter-active-class="uk-animation-slide-left-small uk-animation-fast"
+                  leave-active-class="uk-animation-slide-right-small uk-animation-fast uk-animation-reverse">
+        <oc-alert v-if="ocError" class="oc-dialog-prompt-alert" :noClose="true" variation="danger">
+          {{ ocError }}
+        </oc-alert>
+      </transition>
       <oc-loader v-if="ocLoading"></oc-loader>
     </template>
     <template slot="footer">
