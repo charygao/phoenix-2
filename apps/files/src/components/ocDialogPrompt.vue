@@ -1,9 +1,6 @@
 <template>
   <oc-dialog :name="name" v-model="ocActive" :title="ocTitle">
     <template slot="content">
-      <oc-alert v-if="ocError" class="oc-dialog-prompt-alert" :noClose="true" variation="danger">
-        {{ ocError }}
-      </oc-alert>
       <span v-if="ocContent" class="uk-text-break">{{ ocContent }}</span>
       <oc-text-input v-if="ocHasInput"
         :disabled="ocLoading"
@@ -15,6 +12,9 @@
         ref="input"
         @keydown.enter.native="onConfirm"
       ></oc-text-input>
+      <oc-alert v-if="ocError" class="oc-dialog-prompt-alert" :noClose="true" variation="danger">
+        {{ ocError }}
+      </oc-alert>
       <oc-loader v-if="ocLoading"></oc-loader>
     </template>
     <template slot="footer">
