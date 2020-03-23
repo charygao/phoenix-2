@@ -565,6 +565,11 @@ module.exports = {
         .waitForElementVisible(formattedWithUserName)
         .useCss()
       return true
+    },
+    cancelCollaboratorExpirationDatePopUp: function () {
+      return this
+        .waitForElementVisible('@collaboratorExpirationDateModalCancelButton')
+        .click('@collaboratorExpirationDateModalCancelButton')
     }
   },
   elements: {
@@ -658,6 +663,9 @@ module.exports = {
     },
     collaboratorExpirationDateModalConfirmButton: {
       selector: '.vdatetime-popup__actions__button--confirm'
+    },
+    collaboratorExpirationDateModalCancelButton: {
+      selector: '.vdatetime-popup__actions__button--cancel'
     },
     collaboratorExpirationDate: {
       selector: '//span[contains(@class, "files-collaborators-collaborator-name") and text()="%s"]/../../span/span[contains(@class, "files-collaborators-collaborator-expires")]',

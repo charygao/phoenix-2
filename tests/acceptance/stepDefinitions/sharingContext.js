@@ -907,7 +907,8 @@ Then('a {string} label should be visible above the expiration date field', async
 
 Then('the expiration date for {string} should be disabled', async function (expiration) {
   const isDisabled = await client.page.FilesPageElement.sharingDialog().attemptToChangeCollaboratorExpiryDateToDisabledValue(expiration)
-  return assert.strictEqual(isDisabled, true, 'The date was expected to be disabled, but is not')
+  await assert.strictEqual(isDisabled, true, 'The date was expected to be disabled, but is not')
+  return client.page.FilesPageElement.sharingDialog().cancelCollaboratorExpirationDatePopUp()
 })
 
 Then('the current collaborators list should have order {string}', async function (expectedNames) {
