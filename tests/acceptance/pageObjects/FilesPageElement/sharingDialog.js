@@ -550,11 +550,21 @@ module.exports = {
      * @return Boolean
      */
     isRequiredLabelPresent: async function () {
-      let required = false
       await this
         .waitForElementVisible('@requiredLabelInCollaboratorsExpirationDate')
-      required = true
-      return required
+      return true
+    },
+    /**
+     * checks if the expiration date is present in the collaborator share
+     * @return Boolean
+     */
+    isCollaboratorExpirationDatePresent: async function (user) {
+      const formattedWithUserName = util.format(this.elements.collaboratorExpirationInfo.selector, user)
+      await this
+        .useXpath()
+        .waitForElementVisible(formattedWithUserName)
+        .useCss()
+      return true
     }
   },
   elements: {
@@ -678,6 +688,10 @@ module.exports = {
     },
     elementInterceptingCollaboratorsExpirationInput: {
       selector: '.vdatetime-overlay.vdatetime-fade-leave-active.vdatetime-fade-leave-to'
+    },
+    collaboratorExpirationInfo: {
+      selector: '//div/span[.="%s"]/parent::div/following-sibling::span/span[contains(text(), "Expires")]',
+      locateStrategy: 'xpath'
     }
   }
 }

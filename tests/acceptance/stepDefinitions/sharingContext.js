@@ -780,6 +780,11 @@ Then('user {string} should be listed as {string} in the collaborators list on th
   return assertCollaboratorslistContains('user', user, { role })
 })
 
+Then('the share with user {string} should have no expiration information', async function (user) {
+  const isNotPresent = await client.page.FilesPageElement.sharingDialog().isCollaboratorExpirationDatePresent(user)
+  return assert.strictEqual(true, isNotPresent)
+})
+
 Then('remote user {string} should be listed as {string} via {string} in the collaborators list on the webUI', function (user, role, via) {
   user = util.format('%s@%s', user, client.globals.remote_backend_url)
   return assertCollaboratorslistContains('remote user', user, { role, via })

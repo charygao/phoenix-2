@@ -726,3 +726,14 @@ Feature: Sharing files and folders with internal users
     And the expiration date for "+14 days" should be disabled
     Then the expiration date shown on the webUI should be "+7" days
     And it should not be possible to save the pending share on the webUI
+
+  Scenario: create a share without expiration date and then setting default expiration date and enforcing it does not change the expiration of previously created share
+    Given user "user1" has created a new share with following settings
+      | path      | lorem.txt |
+      | shareWith | user2     |
+    And the setting "shareapi_default_expire_date_user_share" of app "core" has been set to "yes"
+    And the setting "shareapi_expire_after_n_days_user_share" of app "core" has been set to "7"
+    And user "user1" has logged in using the webUI
+    When the user picks the row of file "lorem.txt" in the webUI
+    And the user switches to "collaborators" tab in details panel using the webUI
+    Then the share with user "User Two" should have no expiration information
