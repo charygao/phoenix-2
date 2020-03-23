@@ -449,7 +449,7 @@ Given('the user has reloaded the current page of the webUI', function () {
 })
 
 When('the user marks all files for batch action using the webUI', function () {
-  return client.page.FilesPageElement.filesRow().checkAllFiles()
+  return client.page.FilesPageElement.filesList().checkAllFiles()
 })
 
 When('the user batch deletes the marked files using the webUI', function () {
