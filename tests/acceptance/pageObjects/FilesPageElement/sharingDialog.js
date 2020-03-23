@@ -562,7 +562,7 @@ module.exports = {
       const formattedWithUserName = util.format(this.elements.collaboratorExpirationInfo.selector, user)
       await this
         .useXpath()
-        .waitForElementVisible(formattedWithUserName)
+        .waitForElementNotVisible(formattedWithUserName)
         .useCss()
       return true
     },
