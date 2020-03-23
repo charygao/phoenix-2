@@ -5,15 +5,6 @@ module.exports = {
   commands: {
     /**
      *
-     */
-    checkAllFiles: function () {
-      return this.initAjaxCounters()
-        .waitForElementVisible(filesList.elements.filesTable.selector)
-        .waitForElementVisible('@checkBoxAllFiles')
-        .click('@checkBoxAllFiles')
-    },
-    /**
-     *
      * @param {string} path
      */
     markAsFavorite: async function (path) {
@@ -104,9 +95,6 @@ module.exports = {
     }
   },
   elements: {
-    checkBoxAllFiles: {
-      selector: '#filelist-check-all'
-    },
     notMarkedFavoriteInFileRow: {
       selector: '//span[contains(@class, "oc-star-dimm")]',
       locateStrategy: 'xpath'

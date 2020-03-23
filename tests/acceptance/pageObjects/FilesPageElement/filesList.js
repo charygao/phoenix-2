@@ -209,6 +209,15 @@ module.exports = {
       return this.api.page.FilesPageElement.appSideBar()
     },
     /**
+     *
+     */
+    checkAllFiles: function () {
+      return this.initAjaxCounters()
+        .waitForElementVisible('@filesTable')
+        .waitForElementVisible('@checkBoxAllFiles')
+        .click('@checkBoxAllFiles')
+    },
+    /**
      * Restores all the selected files/folders
      *
      */
@@ -624,6 +633,9 @@ module.exports = {
     },
     publicLinkSideBar: {
       selector: '#oc-files-file-link'
+    },
+    checkBoxAllFiles: {
+      selector: '#filelist-check-all'
     },
     checkboxInFileRow: {
       selector: '//input[@type="checkbox"]',
