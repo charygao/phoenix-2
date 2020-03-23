@@ -89,7 +89,7 @@ config = {
 			},
 			'runningOnOCIS': True,
 			'filterTags': 'not @skip and not @skipOnOCIS',
-			'screenshots': True,
+			'screenShots': True,
 		}
 	},
 
