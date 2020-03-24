@@ -570,6 +570,7 @@ module.exports = {
       return this
         .waitForElementVisible('@collaboratorExpirationDateModalCancelButton')
         .click('@collaboratorExpirationDateModalCancelButton')
+        .waitForElementNotPresent('@collaboratorExpirationDateModalPopUp')
     }
   },
   elements: {
@@ -700,6 +701,9 @@ module.exports = {
     collaboratorExpirationInfo: {
       selector: '//div/span[.="%s"]/parent::div/following-sibling::span/span[contains(text(), "Expires")]',
       locateStrategy: 'xpath'
+    },
+    collaboratorExpirationDateModalPopUp: {
+      selector: '.vdatetime-calendar'
     }
   }
 }
